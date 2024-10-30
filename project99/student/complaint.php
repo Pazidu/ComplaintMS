@@ -27,96 +27,94 @@ if ($result && mysqli_num_rows($result) > 0) {
 }
 
 
-     function name(){
-         if(isset($_POST['updater'])){
-             $_SESSION['issue_id'] = $_POST['updater'];
-             echo "update";
-         }else{
-             echo "submit";
-         }
-         
-     }
-     if (isset($_POST['updater'])) {
-     
-         $issue_id =  $_SESSION['issue_id'];
-     
-       
-         $query = "SELECT * FROM complaints WHERE issue_id ='$issue_id'";
-         $result = mysqli_query($con, $query);
-         
-         if ($result && mysqli_num_rows($result) > 0) {
-           
-             $row = mysqli_fetch_assoc($result);
-           
-     }
-     else{
-         echo mysqli_error($con);
-     }
-     }
-     function setValue($val)
-     {
-     global $row; 
-     if (isset($row[$val])) {
-         echo $row[$val];
-     } else {
-         echo "";
-     }
-     }
-     
-     function setSelected($val, $optionValue)
-     {
-     global $row; 
-     if (isset($row[$val]) && $row[$val] === $optionValue) {
-         echo "selected";
-     } else {
-         echo "";
-     }
-     }
-     
-     function title(){
-         if(isset($_POST['updater'])){
-             
-             echo "update the form";
-         }else{
-             echo "Add an complaint";
-         }
-     }
-  
-     if (isset($_POST['submit'])) {
-         $username = $_POST['username'];
-         $contact = $_POST['contact'];
-         $location = $_POST['location'];
-         $type = $_POST['type'];
-         $date = $_POST['date'];
-    
-         $issue = $_POST['issue'];
-         $serial = $_POST['serial'];
-     
-     
-         $query = "INSERT INTO complaints (user_id,user_name,contact,location,type,date,issue,serial,status)
+function name()
+{
+    if (isset($_POST['updater'])) {
+        $_SESSION['issue_id'] = $_POST['updater'];
+        echo "update";
+    } else {
+        echo "submit";
+    }
+}
+if (isset($_POST['updater'])) {
+
+    $issue_id =  $_SESSION['issue_id'];
+
+
+    $query = "SELECT * FROM complaints WHERE issue_id ='$issue_id'";
+    $result = mysqli_query($con, $query);
+
+    if ($result && mysqli_num_rows($result) > 0) {
+
+        $row = mysqli_fetch_assoc($result);
+    } else {
+        echo mysqli_error($con);
+    }
+}
+function setValue($val)
+{
+    global $row;
+    if (isset($row[$val])) {
+        echo $row[$val];
+    } else {
+        echo "";
+    }
+}
+
+function setSelected($val, $optionValue)
+{
+    global $row;
+    if (isset($row[$val]) && $row[$val] === $optionValue) {
+        echo "selected";
+    } else {
+        echo "";
+    }
+}
+
+function title()
+{
+    if (isset($_POST['updater'])) {
+
+        echo "update the form";
+    } else {
+        echo "Add an complaint";
+    }
+}
+
+if (isset($_POST['submit'])) {
+    $username = $_POST['username'];
+    $contact = $_POST['contact'];
+    $location = $_POST['location'];
+    $type = $_POST['type'];
+    $date = $_POST['date'];
+
+    $issue = $_POST['issue'];
+    $serial = $_POST['serial'];
+
+
+    $query = "INSERT INTO complaints (user_id,user_name,contact,location,type,date,issue,serial,status)
                    VALUES ('$user','$username','$contact', '$location', '$type', '$date', '$issue', '$serial','unresolved')";
-     
-         if (mysqli_query($con, $query)) {
-            //echo "<script>window.location.href='studentuser.php';</script>";
-         } else {
-             echo "Error: " . mysqli_error($con);
-         }
-        
-     }
-     
-     if (isset($_POST['update'])) {
-     
-     
-         $issue_id=$_SESSION['issue_id'];
-         $updatedUsername = $_POST['username'];
-         $updatedLocation = $_POST['location'];
-         $updatedType = $_POST['type'];
-         $updatedDate = $_POST['date'];
-    
-         $updatedIssue = $_POST['issue'];
-         $updatedSerial = $_POST['serial'];
-     
-         $updateQuery = "UPDATE complaints 
+
+    if (mysqli_query($con, $query)) {
+        //echo "<script>window.location.href='studentuser.php';</script>";
+    } else {
+        echo "Error: " . mysqli_error($con);
+    }
+}
+
+if (isset($_POST['update'])) {
+
+
+    $issue_id = $_SESSION['issue_id'];
+    $updatedUsername = $_POST['username'];
+    $updatedLocation = $_POST['location'];
+    $updatedType = $_POST['type'];
+    $updatedDate = $_POST['date'];
+
+    $updatedIssue = $_POST['issue'];
+    $updatedSerial = $_POST['serial'];
+
+    $updateQuery = "UPDATE complaints 
                          SET username = '$updatedUsername', 
                              location = '$updatedLocation', 
                              type = '$updatedType', 
@@ -125,22 +123,22 @@ if ($result && mysqli_num_rows($result) > 0) {
                              issue = '$updatedIssue', 
                              serial = '$updatedSerial' 
                          WHERE issue_id = '$issue_id'";
-     
-         if (mysqli_query($con, $updateQuery)) {
-             unset($_SESSION['issue_id']);
-             header("location:history.php");
-             exit;
-            
-         } else {
-             unset($_SESSION['issue_id']);
-          echo "Error: " . mysqli_error($con);
-         }
-     }
-     
-        
+
+    if (mysqli_query($con, $updateQuery)) {
+        unset($_SESSION['issue_id']);
+        header("location:history.php");
+        exit;
+    } else {
+        unset($_SESSION['issue_id']);
+        echo "Error: " . mysqli_error($con);
+    }
+}
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="css/complaint123.css">
@@ -149,25 +147,25 @@ if ($result && mysqli_num_rows($result) > 0) {
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
     <script>
-        $(document).ready(function(){
-                $(".hamburger .hamburger__inner").click(function(){
+        $(document).ready(function() {
+            $(".hamburger .hamburger__inner").click(function() {
                 $(".wrapper").toggleClass("active")
-                })
-
-                $(".top_navbar .fas").click(function(){
-                $(".profile_dd").toggleClass("active");
-                });
             })
-            if(window.history.replaceState){
-    window.history.replaceState(null,null,window.location.href);}
-  
+
+            $(".top_navbar .fas").click(function() {
+                $(".profile_dd").toggleClass("active");
+            });
+        })
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+
 
         document.addEventListener("DOMContentLoaded", function() {
             const profileImageElement = document.getElementById("profile");
-            const imagePath = "<?php echo $imagePath; ?>"; 
+            const imagePath = "<?php echo $imagePath; ?>";
             profileImageElement.src = imagePath;
         });
-    
     </script>
     <style>
         #profile2 {
@@ -186,6 +184,7 @@ if ($result && mysqli_num_rows($result) > 0) {
     <title>Student-Complaint</title>
     <link rel="icon" href="favicon.png" sizes="120x120" type="image/png">
 </head>
+
 <body>
     <div class="wrapper">
         <div class="top_navbar">
@@ -224,35 +223,35 @@ if ($result && mysqli_num_rows($result) > 0) {
                         </div>
                     </div>
                     <ul>
-                    <li><a href="home.php"><span class="icon"><i class="ri-home-4-fill"></i></span><span class="title">Home</span></a></li>
+                        <li><a href="home.php"><span class="icon"><i class="ri-home-4-fill"></i></span><span class="title">Home</span></a></li>
                         <li>
                             <a href="about.php">
-                            <span class="icon"><i class="ri-information-fill"></i></span>
-                            <span class="title">About</span>
+                                <span class="icon"><i class="ri-information-fill"></i></span>
+                                <span class="title">About</span>
                             </a>
                         </li>
                         <li>
                             <a href="profile.php">
-                            <span class="icon"><i class="ri-account-circle-fill"></i></span>
-                            <span class="title">Profile</span>
+                                <span class="icon"><i class="ri-account-circle-fill"></i></span>
+                                <span class="title">Profile</span>
                             </a>
                         </li>
                         <li>
                             <a href="password.php">
-                            <span class="icon"><i class="ri-key-2-fill"></i></span>
-                            <span class="title">Change Password</span>
+                                <span class="icon"><i class="ri-key-2-fill"></i></span>
+                                <span class="title">Change Password</span>
                             </a>
                         </li>
                         <li>
                             <a href="complaint.php" class="active">
-                            <span class="icon"><i class="ri-add-circle-fill"></i></span>
-                            <span class="title">Add Complaint</span>
+                                <span class="icon"><i class="ri-add-circle-fill"></i></span>
+                                <span class="title">Add Complaint</span>
                             </a>
                         </li>
                         <li>
                             <a href="history.php">
-                            <span class="icon"><i class="ri-check-double-line"></i></span>
-                            <span class="title">Your Complaints</span>
+                                <span class="icon"><i class="ri-check-double-line"></i></span>
+                                <span class="title">Your Complaints</span>
                             </a>
                         </li>
                     </ul>
@@ -293,8 +292,12 @@ if ($result && mysqli_num_rows($result) > 0) {
                             <textarea id="issue" name="issue" required class="textarea"><?php setValue('issue'); ?></textarea>
                         </div>
                         <div class="inputfield">
+                            <label>Upload Image</label>
+                            <input type="file" name="issue_image" accept="image/*" class="file-input">
+                        </div>
+                        <div class="inputfield">
                             <label>Serial</label>
-                            <input type="text" class="input" id="serial" name="serial"  value="<?php setValue('serial'); ?>">
+                            <input type="text" class="input" id="serial" name="serial" value="<?php setValue('serial'); ?>">
                         </div>
                         <div class="inputfield">
                             <input type="submit" name="<?php name(); ?>" value="<?php name(); ?>" class="btn" onclick="openPopup()">
@@ -304,75 +307,75 @@ if ($result && mysqli_num_rows($result) > 0) {
             </div>
         </div>
     </div>
-   
+
 </body>
+
 </html>
 <script>
- fetch('./getloc.php', {
-  method: 'POST', // or 'GET', 'PUT', etc.
-  headers: {
-    'Content-Type': 'application/json', // Specify the content type if needed
-    // You can add other headers as needed
-  },
-})
-  .then(response => {
-    if (!response.ok) {
-      throw new Error('Network response was not ok');
-    }
-    return response.json();
-  })
-  .then(data => {
-    // Handle the response data here
-    console.log(data);
-    var locationSelect = $("#location");
-    locationSelect.empty();
-
-    if (data.length > 0) {
-      locationSelect.append("<option value='' disabled selected>Select Location</option>");
-
-      for (var i = 0; i < data.length; i++) {
-        locationSelect.append("<option value='" + data[i] + "'>" + data[i] + "</option>");
-      }
-    } else {
-      locationSelect.append("<option value='' disabled selected>No locations found</option>");
-    }
-  })
-  .catch(error => {
-    // Handle errors here
-    console.error('Fetch error:', error);
-  });
-
-        $(document).ready(function () {
-    $.ajax({
-        type: "POST",
-        url: "gettype.php",
-        dataType: "json",
-        success: function (response) {
-            var locationSelect = $("#type");
+    fetch('./getloc.php', {
+            method: 'POST', // or 'GET', 'PUT', etc.
+            headers: {
+                'Content-Type': 'application/json', // Specify the content type if needed
+                // You can add other headers as needed
+            },
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Handle the response data here
+            console.log(data);
+            var locationSelect = $("#location");
             locationSelect.empty();
 
-            var hasOtherOption = false; // Track whether the "other" option is present in the response
+            if (data.length > 0) {
+                locationSelect.append("<option value='' disabled selected>Select Location</option>");
 
-            if (response.length > 0) {
-                for (var i = 0; i < response.length; i++) {
-                    if (response[i] === "other") {
-                        locationSelect.prepend("<option value='other'>Other</option>");
-                        hasOtherOption = true;
-                    } else {
-                        locationSelect.append("<option value='" + response[i] + "'>" + response[i] + "</option>");
+                for (var i = 0; i < data.length; i++) {
+                    locationSelect.append("<option value='" + data[i] + "'>" + data[i] + "</option>");
+                }
+            } else {
+                locationSelect.append("<option value='' disabled selected>No locations found</option>");
+            }
+        })
+        .catch(error => {
+            // Handle errors here
+            console.error('Fetch error:', error);
+        });
+
+    $(document).ready(function() {
+        $.ajax({
+            type: "POST",
+            url: "gettype.php",
+            dataType: "json",
+            success: function(response) {
+                var locationSelect = $("#type");
+                locationSelect.empty();
+
+                var hasOtherOption = false; // Track whether the "other" option is present in the response
+
+                if (response.length > 0) {
+                    for (var i = 0; i < response.length; i++) {
+                        if (response[i] === "other") {
+                            locationSelect.prepend("<option value='other'>Other</option>");
+                            hasOtherOption = true;
+                        } else {
+                            locationSelect.append("<option value='" + response[i] + "'>" + response[i] + "</option>");
+                        }
                     }
                 }
-            }
 
-            if (!hasOtherOption) {
-                locationSelect.prepend("<option value='other'>Other</option>");
+                if (!hasOtherOption) {
+                    locationSelect.prepend("<option value='other'>Other</option>");
+                }
+            },
+            error: function() {
+                alert("Error fetching type options.");
             }
-        },
-        error: function () {
-            alert("Error fetching type options.");
-        }
+        });
     });
-});
-
-    </script>
+</script>
 </script>
